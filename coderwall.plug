@@ -1,0 +1,6 @@
+[Core]
+Name = Coderwall
+Module = coderwall
+
+[Documentation]
+Description = What are the achievement of this guy ?
