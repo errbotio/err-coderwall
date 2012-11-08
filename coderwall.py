@@ -7,7 +7,7 @@ else:
     from errbot.botplugin import BotPlugin
     from errbot.jabberbot import botcmd
 
-import simplejson
+import json
 from urllib2 import urlopen
 
 USER = """\
@@ -32,7 +32,7 @@ class Coderwall(BotPlugin):
             return 'Am I supposed to guess the username?...'
         args = args.strip()
         content = urlopen('http://coderwall.com/%s.json' % args)
-        results = simplejson.load(content)
+        results = json.load(content)
         self.send(mess.getFrom(), USER % results, message_type=mess.getType())
         for badge in results['badges']:
             self.send(mess.getFrom(), BADGE % badge, message_type=mess.getType())
