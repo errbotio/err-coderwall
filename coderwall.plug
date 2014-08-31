@@ -2,5 +2,8 @@
 Name = Coderwall
 Module = coderwall
 
+[Python]
+Version = 2+
+
 [Documentation]
 Description = What are the achievement of this guy ?
