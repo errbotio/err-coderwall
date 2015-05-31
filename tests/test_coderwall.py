@@ -7,4 +7,4 @@ class TestCommands(FullStackTest):
     def test_coderwall(self):
         pushMessage('!coderwall gbin')
         self.assertIn('24PullRequests', popMessage())
-        self.assertIn('Forked 20', popMessage())
+        self.assertIn('Forked', popMessage())
