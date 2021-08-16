@@ -1,4 +1,5 @@
 import json
+from urllib.error import HTTPError
 from urllib.request import urlopen
 
 from errbot import BotPlugin, botcmd
@@ -14,7 +15,6 @@ BADGE = "%(name)20s -- %(description)s -- %(badge)s"
 
 
 class Coderwall(BotPlugin):
-
     @botcmd
     def coderwall(self, mess, args):
         """Shows the badges of a coderwall user
@@ -22,9 +22,14 @@ class Coderwall(BotPlugin):
         """
         if not args:
             return "Am I supposed to guess the username?..."
-        args = args.strip()
-        content = urlopen("http://coderwall.com/%s.json" % args)
-        results = json.loads(content.read().decode())
-        for badge in results["badges"]:
-            self.send(mess.frm, BADGE % badge)
-        return USER % results
+        response = None
+        username = args.strip()
+        try:
+            content = urlopen(f"http://coderwall.com/{username}.json")
+            results = json.loads(content.read().decode())
+            for badge in results["badges"]:
+                self.send(mess.frm, BADGE % badge)
+            response = USER % results
+        except HTTPError:
+            response = "User not found."
+        return response
